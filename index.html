@@ -48,6 +48,10 @@
 const $=id=>document.getElementById(id), esc=s=>String(s??'').replace(/[&<>"']/g,x=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[x]));
 const categories={fuel:{label:'Posto de combustível',icon:'⛽'},supermarket:{label:'Supermercado',icon:'🛒'},mall:{label:'Shopping / comércio',icon:'🏬'},hotel:{label:'Hotel',icon:'🏨'},parking:{label:'Estacionamento',icon:'🅿️'},restaurant:{label:'Restaurante',icon:'🍴'},other:{label:'Outro estabelecimento',icon:'📍'}};
 const state={center:{lat:-26.4851,lon:-49.0716},location:'Jaraguá do Sul, SC',tab:'opportunities',poi:[],transformers:[],imported:[],showTransformers:true,selected:null,editingId:null,draftPoint:null,manualMode:false,satellite:false,searchBusy:false,saved:loadSaved(),busy:false,pointDetail:null};
+if(typeof window.L==='undefined'){
+ $('tabContent').innerHTML='<div class="empty-state"><div class="empty-icon">⚠</div><b>O mapa não pôde ser carregado</b><p>Verifique a conexão com a internet e atualize a página. O sistema usa a biblioteca Leaflet e serviços públicos de mapas.</p></div>';
+ $('status').textContent='Falha ao carregar o mapa. Verifique o acesso à internet e recarregue esta página.';$('status').className='statusbar show error';return;
+}
 const layers={poi:L.layerGroup(),transformer:L.layerGroup(),saved:L.layerGroup(),focus:L.layerGroup(),center:L.layerGroup()};
 const map=L.map('map',{zoomControl:false,preferCanvas:true}).setView([state.center.lat,state.center.lon],13);
 L.control.zoom({position:'topleft'}).addTo(map);
